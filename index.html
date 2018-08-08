@@ -10,11 +10,15 @@
        width="100" height="100">
   <img id="menubuttonDark" src="buttonDark.png"
        width="100" height="100">
+  <img id="textBox" src="speech.png"
+       width="640" height="100">
+
 <style>
     body {
         background-color: black;
         
-    }        
+    }   
+    @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
         
 </style>
 </div>
@@ -24,13 +28,19 @@
     <script>
     var bob = document.getElementById('source');
     var kidney = document.getElementById('intro');
+    var textBox = document.getElementById("textBox");
     var selector = document.getElementById("menuselect");
     var buttonLight = document.getElementById("menubutton");
     var buttonDark = document.getElementById("menubuttonDark")
     var potato = "a Jhonxay Game"
     var y = 0;
+    var EnterToggle = false;
     var walkstage = 1;
     var x = 0;
+    var textBoxTest = "Hello, young mortal!"
+    var wordcount = 0;
+    var counted = '';
+    var talking = true;
     var idleness = true;
     var movement = true;
     var selected = false;
@@ -69,6 +79,10 @@
                     if (realm == "menu") {
                         selected = true;
                     }
+                    else if (talking == true) {
+                        EnterToggle = true;
+                    }
+                    break;
                 case 65:
                     x-= 5;
                     idleness = false;
@@ -203,6 +217,21 @@
                     idleframe = 0;
                     idleness = true;
                 }
+                if (talking == true) {
+                    if (wordcount != textBoxTest.length) {
+                        cc.drawImage(textBox, 0, 400);
+                        cc.fillStyle = "white";
+                        console.log("this is working")
+                        cc.fillText(counted, 0, 100);
+                        counted += textBoxTest[wordcount]
+                        wordcount++;
+                    }
+                    else if (EnterToggle == true) {
+                        EnterToggle = false;
+                        talking = false;
+                    }
+                    
+                }
             }
             idleframe++;
         }
@@ -213,7 +242,7 @@
             cc.drawImage(kidney, 0, 0)
             cc.fillStyle = "white"
             if (frame < 20) {
-                cc.font =  sizer+"px"+" Cursive";
+            cc.font =  sizer+"px"+" Cursive";
                 cc.fillText(potato, 100, 800)
             }
             else if (frame < 210) {
