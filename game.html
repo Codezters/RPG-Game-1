@@ -1,0 +1,286 @@
+<html>
+    <div style='display: none'>
+  <img id="source" src="IdleDOWN.png"
+       width="300" height="227">
+  <img id="intro" src="space.png"
+       width="640" height="480">
+  <img id="menuselect" src="starselector.png"
+       width="100" height="100">
+  <img id="menubutton" src="button.png"
+       width="100" height="100">
+  <img id="menubuttonDark" src="buttonDark.png"
+       width="100" height="100">
+<style>
+    body {
+        background-color: black;
+        
+    }        
+        
+</style>
+</div>
+<body>
+<center>
+<canvas style=" padding-top: 125px;" id="gc" width="640" height="480"></canvas>
+    <script>
+    var bob = document.getElementById('source');
+    var kidney = document.getElementById('intro');
+    var selector = document.getElementById("menuselect");
+    var buttonLight = document.getElementById("menubutton");
+    var buttonDark = document.getElementById("menubuttonDark")
+    var potato = "a Jhonxay Game"
+    var y = 0;
+    var walkstage = 1;
+    var x = 0;
+    var idleness = true;
+    var movement = true;
+    var selected = false;
+    var idleframe = 0;
+    var iteration = 1;
+    var sizer = 60
+    var frame = 0;
+    var direction = 'down';
+    var selectednumber = 1;
+    var frame2 = 0;
+    var realm = 'intro'
+    window.onload= function() {
+        c=document.getElementById('gc');
+        document.addEventListener("keydown",keyPush)
+        cc=c.getContext('2d');
+        setInterval(update,1000/30);
+    };
+        function keyPush (evt) {
+            switch(evt.keyCode) {
+                case 32:
+                    break;
+                case 68:
+                    direction = 'right';
+                    idleframe = 0;
+                    idleness = false;
+                    x+= 5;;
+                    if (walkstage == 9) {
+                        walkstage = 1;
+                    }
+                    else {
+                        walkstage++;
+                    }
+                    console.log(walkstage);
+                    break;
+                case 13:
+                    if (realm == "menu") {
+                        selected = true;
+                    }
+                case 65:
+                    x-= 5;
+                    idleness = false;
+                    idleframe = 0;
+                    direction = 'left';
+                    if (walkstage == 9) {
+                        walkstage = 1;   
+                    }
+                    else {
+                        walkstage++;
+                    }
+                    break;
+                case 87:
+                    if (realm == 'overworld') {
+                        y-= 5;
+                        idleframe = 0;
+                        idleness = false;
+                        direction = 'up';
+                        if (walkstage == 9) {
+                            walkstage = 1;   
+                        }
+                        else {
+                            walkstage++;
+                        }
+                        break;
+                    }
+                    else if (realm == 'menu') {
+                        if (selectednumber == 1) {
+                            selectednumber = 3;
+                        }
+                        else {
+                            selectednumber--;
+                        }
+                        break;
+                    }
+                case 83:
+                    if (realm == 'overworld') {
+                        y+= 5;
+                        idleframe = 0;
+                        idleness = false;
+                        direction = 'down';
+                        if (walkstage == 9) {
+                            walkstage = 1;   
+                        }
+                        else {
+                            walkstage++;
+                        }
+                        break;
+                    }
+                    else if (realm == 'menu') {
+                        if (selectednumber == 3) {
+                            selectednumber = 1;
+                        }
+                        else {
+                            selectednumber++;
+                        }
+                        break;
+                    }
+                
+            }
+        }
+    function update() {
+        if (realm == 'overworld') {
+            cc.fillStyle='blue';
+            cc.fillRect(0,0,c.width,c.height);
+            cc.drawImage(bob, x, y);
+            
+            // Player Walk Animations 
+            
+            if (direction == 'up' && idleness == false) {
+                if (walkstage > 0 && walkstage <4) {
+                    document.getElementById("source").src = "IdleMoveUP1.png"
+                }
+                else if (walkstage > 3 &&  walkstage < 7) {
+                    document.getElementById("source").src = "IdleUP.png"
+                }
+                else if (walkstage > 6 && walkstage < 10) {
+                    document.getElementById("source").src = "IdleMoveUP2.png"
+                }
+            }
+            else if (direction == 'right' && idleness == false) {
+                if (walkstage > 0 && walkstage <4) {
+                    document.getElementById("source").src = "IdleMoveRIGHT1.png"
+                }
+                else if (walkstage > 3 &&  walkstage < 7) {
+                    document.getElementById("source").src = "IdleRIGHT.png"
+                }
+                else if (walkstage > 6 && walkstage < 10) {
+                    document.getElementById("source").src = "IdleMoveRIGHT2.png"
+                }
+            }
+            else if (direction == 'left' && idleness == false) {
+                if (walkstage > 0 && walkstage <4) {
+                    document.getElementById("source").src = "IdleMoveLEFT1.png"
+                }
+                else if (walkstage > 3 &&  walkstage < 7) {
+                    document.getElementById("source").src = "IdleLEFT.png"
+                }
+                else if (walkstage > 6 && walkstage < 10) {
+                    document.getElementById("source").src = "IdleMoveLEFT2.png"
+                }
+            }
+            else if (direction == 'down' && idleness == false) {
+                if (walkstage > 0 && walkstage <4) {
+                    document.getElementById("source").src = "IdleMoveDOWN1.png"
+                }
+                else if (walkstage > 3 &&  walkstage < 7) {
+                    document.getElementById("source").src = "IdleDOWN.png"
+                }
+                else if (walkstage > 6 && walkstage < 10) {
+                    document.getElementById("source").src = "IdleMoveDOWN2.png"
+                }
+            }        
+            if (idleframe == 8) {
+                if (direction == 'down') {
+                    document.getElementById("source").src = "IdleDOWN.png"
+                    idleframe = 0;
+                    idleness = true;
+                }
+                else if (direction == 'up') {
+                    document.getElementById("source").src = "IdleUP.png"
+                    idleframe = 0;
+                    idleness = true;
+                }
+                else if (direction == 'right') {
+                    document.getElementById("source").src = "IdleRIGHT.png"
+                    idleframe = 0;
+                    idleness = true;
+                }
+                else if (direction == 'left') {
+                    document.getElementById("source").src = "IdleLEFT.png"
+                    idleframe = 0;
+                    idleness = true;
+                }
+            }
+            idleframe++;
+        }
+        else if (realm == "battle") {
+            //Battle Fight
+        }
+        else if (realm == "intro") {
+            cc.drawImage(kidney, 0, 0)
+            cc.fillStyle = "white"
+            if (frame < 20) {
+                cc.font =  sizer+"px"+" Cursive";
+                cc.fillText(potato, 100, 800)
+            }
+            else if (frame < 210) {
+                cc.font =  sizer+"px"+" Cursive";
+                cc.fillText(potato, 100, 800 - frame2 * 5);
+                frame2++;
+            }
+             if (frame > 220) {
+                if (iteration == 3) {
+                    realm = 'menu';
+                }
+                else if (iteration == 1){
+                    iteration = 2;
+                    frame = 0;
+                    frame2 = 0;
+                    sizer = 30;
+                    potato = "with art from Curt - cjc83486"
+                    console.log("made it to iteration 2")
+                }
+                else if (iteration == 2){
+                    iteration = 3;
+                    frame = 0;
+                    frame2 = 0;
+                    sizer = 20;
+                    potato = "https://opengameart.org/content/rpg-character"
+                    console.log("made it to iteration 3")
+                    
+                }
+            }
+            frame++;
+            }
+        else if (realm == "menu") {
+            cc.fillStyle= 'black';
+            cc.fillRect(0, 0, c.width, c.height);
+            if (selectednumber == 1) {
+                cc.drawImage(buttonLight, 150, 200);
+                cc.drawImage(buttonLight, 150, 300);
+                cc.drawImage(buttonDark, 150, 100);
+                cc.drawImage(selector, 50, 125);
+                cc.fillStyle = "white"
+                cc.font = "40px Cursive"
+                cc.fillText('Play', 270, 160)
+                if (selected == true) {
+                    realm = 'overworld'
+                }
+            }
+            else if (selectednumber == 2) {
+                cc.drawImage(selector, 50, 225);
+                cc.drawImage(buttonLight, 150, 100);
+                cc.drawImage(buttonLight, 150, 300);
+                cc.drawImage(buttonDark, 150, 200);
+                cc.fillStyle = "white"
+                cc.font = "40px Cursive"
+                cc.fillText('Play', 270, 160)
+            }
+            else if (selectednumber == 3) {
+                cc.drawImage(selector, 50, 325)
+                cc.drawImage(buttonLight, 150, 200);
+                cc.drawImage(buttonLight, 150, 100);
+                cc.drawImage(buttonDark, 150, 300);
+                cc.fillStyle = "white"
+                cc.font = "40px Cursive"
+                cc.fillText('Play', 270, 160)
+            }
+        }
+    }
+    </script>
+    </center>
+    </body>
+</html>
