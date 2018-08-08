@@ -224,14 +224,20 @@
                     if (wordcount != textBoxTest.length) {
                         cc.drawImage(textBox, 0, 400);
                         cc.fillStyle = "white";
-                        console.log("this is working")
+                        console.log("this is working");
                         cc.fillText(counted, 0, 100);
-                        counted += textBoxTest[wordcount]
+                        counted += textBoxTest[wordcount];
                         wordcount++;
                     }
                     else if (EnterToggle == true) {
                         EnterToggle = false;
                         talking = false;
+                    }
+                    else if (wordcount == textBoxTest.length && EnterToggle == false) {
+                        cc.drawImage(textBox, 0, 400);
+                        cc.fillStyle = "white";
+                        console.log("this is working2");
+                        cc.fillText(counted, 0, 100);
                     }
                     
                 }
