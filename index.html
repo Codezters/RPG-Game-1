@@ -51,7 +51,18 @@
     var direction = 'down';
     var selectednumber = 1;
     var frame2 = 0;
+    var firstTimeCheck = 0;
     var realm = 'intro'
+    
+    function RefreshScreen() {
+        cc.fillStyle='blue';
+        cc.fillRect(0,0,c.width,c.height);
+        cc.drawImage(bob, x, y);
+        console.log("drawing")    
+    }
+    
+    
+    
     window.onload= function() {
         c=document.getElementById('gc');
         document.addEventListener("keydown",keyPush)
@@ -63,15 +74,17 @@
                 case 32:
                     break;
                 case 68:
-                    direction = 'right';
-                    idleframe = 0;
-                    idleness = false;
-                    x+= 5;;
-                    if (walkstage == 9) {
-                        walkstage = 1;
-                    }
-                    else {
-                        walkstage++;
+                    if (talking == false) {
+                        direction = 'right';
+                        idleframe = 0;
+                        idleness = false;
+                        x+= 5;;
+                        if (walkstage == 9) {
+                            walkstage = 1;
+                        }
+                        else {
+                            walkstage++;
+                        }
                     }
                     console.log(walkstage);
                     break;
@@ -87,19 +100,21 @@
                     }
                     break;
                 case 65:
-                    x-= 5;
-                    idleness = false;
-                    idleframe = 0;
-                    direction = 'left';
-                    if (walkstage == 9) {
-                        walkstage = 1;   
-                    }
-                    else {
-                        walkstage++;
+                    if (realm == 'overworld' && talking == false){
+                        x-= 5;
+                        idleness = false;
+                        idleframe = 0;
+                        direction = 'left';
+                        if (walkstage == 9) {
+                            walkstage = 1;   
+                        }
+                        else {
+                            walkstage++;
+                        }
                     }
                     break;
                 case 87:
-                    if (realm == 'overworld') {
+                    if (realm == 'overworld' && talking == false) {
                         y-= 5;
                         idleframe = 0;
                         idleness = false;
@@ -112,7 +127,7 @@
                         }
                         break;
                     }
-                    else if (realm == 'menu') {
+                    else if (realm == 'menu' && talking == false) {
                         if (selectednumber == 1) {
                             selectednumber = 3;
                         }
@@ -122,7 +137,7 @@
                         break;
                     }
                 case 83:
-                    if (realm == 'overworld') {
+                    if (realm == 'overworld' && talking == false) {
                         y+= 5;
                         idleframe = 0;
                         idleness = false;
@@ -149,9 +164,13 @@
         }
     function update() {
         if (realm == 'overworld') {
-            cc.fillStyle='blue';
-            cc.fillRect(0,0,c.width,c.height);
-            cc.drawImage(bob, x, y);
+            if (firstTimeCheck == 0) {
+                RefreshScreen();
+                firstTimeCheck ++;
+            }
+            if (idleness == false) {
+                RefreshScreen();    
+            }
             
             // Player Walk Animations 
             
@@ -202,42 +221,47 @@
             if (idleframe == 8) {
                 if (direction == 'down') {
                     document.getElementById("source").src = "IdleDOWN.png"
+                    RefreshScreen();
                     idleframe = 0;
                     idleness = true;
                 }
                 else if (direction == 'up') {
                     document.getElementById("source").src = "IdleUP.png"
+                    RefreshScreen();
                     idleframe = 0;
                     idleness = true;
                 }
                 else if (direction == 'right') {
                     document.getElementById("source").src = "IdleRIGHT.png"
+                    RefreshScreen();
                     idleframe = 0;
                     idleness = true;
                 }
                 else if (direction == 'left') {
                     document.getElementById("source").src = "IdleLEFT.png"
+                    RefreshScreen();
                     idleframe = 0;
                     idleness = true;
                 }
                 if (talking == true) {
                     if (wordcount != textBoxTest.length) {
-                        cc.drawImage(textBox, 0, 400);
-                        cc.fillStyle = "white";
-                        console.log("this is working");
-                        cc.fillText(counted, 0, 100);
+                        cc.drawImage(textBox, 0, 380);
+                        cc.fillStyle = "black";
+                        cc.fillText(counted, 30, 445);
                         counted += textBoxTest[wordcount];
                         wordcount++;
+                        console.log("this is working");
                     }
                     else if (EnterToggle == true) {
                         EnterToggle = false;
                         talking = false;
+                        RefreshScreen();
                     }
                     else if (wordcount == textBoxTest.length && EnterToggle == false) {
-                        cc.drawImage(textBox, 0, 400);
-                        cc.fillStyle = "white";
+                        cc.drawImage(textBox, 0, 380);
+                        cc.fillStyle = "black";
+                        cc.fillText(counted, 30, 445);
                         console.log("this is working2");
-                        cc.fillText(counted, 0, 100);
                     }
                     
                 }
