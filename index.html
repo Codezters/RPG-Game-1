@@ -11,6 +11,8 @@
   <img id="menubuttonDark" src="buttonDark.png"
        width="100" height="100">
   <img id="textBox" src="speech.png"
+       width="640" height="100"> 
+  <img id="bgnow" src="background.png"
        width="640" height="100">
 
 <style>
@@ -39,6 +41,7 @@
     var x = 0;
     var textBoxTest = "Hello, young mortal!"
     var wordcount = 0;
+    var backgroundStuff = document.getElementById("bgnow")
     var counted = '';
     var talking = true;
     var idleness = true;
@@ -55,10 +58,22 @@
     var realm = 'intro'
     
     function RefreshScreen() {
-        cc.fillStyle='blue';
-        cc.fillRect(0,0,c.width,c.height);
+        cc.drawImage(backgroundStuff, 0, 0)
         cc.drawImage(bob, x, y);
-        console.log("drawing")    
+    }
+    function sound(src) {
+        this.sound = document.createElement("audio");
+        this.sound.src = src;
+        this.sound.setAttribute("preload", "auto");
+        this.sound.setAttribute("controls", "none");
+        this.sound.style.display = "none";
+        document.body.appendChild(this.sound);
+        this.play = function(){
+            this.sound.play();
+        }
+        this.stop = function(){
+            this.sound.pause();
+        }
     }
     
     
@@ -86,7 +101,6 @@
                             walkstage++;
                         }
                     }
-                    console.log(walkstage);
                     break;
                 case 13:
                     if (realm == "menu") {
@@ -169,7 +183,7 @@
                 firstTimeCheck ++;
             }
             if (idleness == false) {
-                RefreshScreen();    
+                RefreshScreen();
             }
             
             // Player Walk Animations 
@@ -250,7 +264,6 @@
                         cc.fillText(counted, 30, 445);
                         counted += textBoxTest[wordcount];
                         wordcount++;
-                        console.log("this is working");
                     }
                     else if (EnterToggle == true) {
                         EnterToggle = false;
@@ -261,7 +274,6 @@
                         cc.drawImage(textBox, 0, 380);
                         cc.fillStyle = "black";
                         cc.fillText(counted, 30, 445);
-                        console.log("this is working2");
                     }
                     
                 }
@@ -293,7 +305,6 @@
                     frame2 = 0;
                     sizer = 30;
                     potato = "with assets by Curt - cjc83486"
-                    console.log("made it to iteration 2")
                 }
                 else if (iteration == 2){
                     iteration = 3;
@@ -301,7 +312,6 @@
                     frame2 = 0;
                     sizer = 20;
                     potato = "https://opengameart.org/content/rpg-character"
-                    console.log("made it to iteration 3")
                     
                 }
             }
@@ -344,5 +354,5 @@
     }
     </script>
     </center>
-    </body>
+        </body>
 </html>
