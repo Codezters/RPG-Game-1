@@ -40,6 +40,7 @@
     var walkstage = 1;
     var x = 0;
     var textBoxTest = "Hello, young mortal!"
+    var mySound;
     var wordcount = 0;
     var backgroundStuff = document.getElementById("bgnow")
     var counted = '';
@@ -82,6 +83,7 @@
         c=document.getElementById('gc');
         document.addEventListener("keydown",keyPush)
         cc=c.getContext('2d');
+        mySound = new sound("stapler.wav");
         setInterval(update,1000/30);
     };
         function keyPush (evt) {
@@ -141,7 +143,7 @@
                         }
                         break;
                     }
-                    else if (realm == 'menu' && talking == false) {
+                    else if (realm == 'menu') {
                         if (selectednumber == 1) {
                             selectednumber = 3;
                         }
@@ -328,6 +330,7 @@
                 cc.fillStyle = "white"
                 cc.font = "40px Cursive"
                 cc.fillText('Play', 270, 160)
+                mySound.play;
                 if (selected == true) {
                     realm = 'overworld'
                 }
@@ -340,6 +343,7 @@
                 cc.fillStyle = "white"
                 cc.font = "40px Cursive"
                 cc.fillText('Play', 270, 160)
+                mySound.play;
             }
             else if (selectednumber == 3) {
                 cc.drawImage(selector, 50, 325)
@@ -349,6 +353,7 @@
                 cc.fillStyle = "white"
                 cc.font = "40px Cursive"
                 cc.fillText('Play', 270, 160)
+                mySound.play;
             }
         }
     }
